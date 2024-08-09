@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Inicio de Sesión</h2>
+        <form action="/admin/login" method="POST">
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="email" class="form-control" id="correo" name="correo" required>
+            </div>
+            <div class="mb-3">
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.querySelector('form');
+        
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío por defecto del formulario
+        
+                const correo = document.getElementById('correo').value;
+                const contrasena = document.getElementById('contrasena').value;
+        
+                // Enviar datos al servidor
+                fetch('/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ correo, contrasena })
+                })
+                .then(response => response.json()) // Espera una respuesta JSON
+                .then(data => {
+                    if (data.success) {
+                        // Guardar el correo en localStorage si el inicio de sesión es exitoso
+                        localStorage.setItem('userCorreo', correo);
+                        // Redirigir al panel administrativo o página de éxito
+                        window.location.href = '/admin';
+                    } else {
+                        // Mostrar mensaje de error
+                        alert('Credenciales inválidas');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        })
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centros de Ayuda - Universidad Libre de Violencia de Género</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            background-color: #f8f9fa; /* Gris claro de fondo */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #7b46ed;
+            padding: 15px 20px;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo img {
+            height: 50px;
+        }
+
+        .navbar .menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .navbar .button {
+            color: #ffffff;
+            background-color: #8000E5;
+            border: 1px solid #8000E5;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .menu {
+                display: none;
+            }
+
+            .navbar .toggle-button {
+                display: block;
+                cursor: pointer;
+                color: #ffffff;
+                font-size: 24px;
+            }
+
+            .navbar .menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #753AF2;
+                z-index: 1;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .navbar .menu.active a {
+                padding: 15px;
+                text-align: center;
+                border-bottom: 1px solid #FFC107;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .navbar .toggle-button {
+                display: none;
+            }
+        }
+
+        #map {
+            height: 600px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><img src="/images/logo.png" alt="Logo"></div>
+        
+        <div class="toggle-button" onclick="toggleMenu()">
+            &#9776;
+        </div>
+        
+        <div class="menu">
+            <a href="/" class="button">Inicio</a>
+            <a href="/blog" class="button">Blog</a>
+            <a href="/reportes" class="button">Reportes</a>
+            <a href="/centro-ayuda" class="button">Centros de Ayuda</a>
+            <a href="/ayuda" class="button">Ayuda</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Centros de Ayuda de Violencia</h1>
+        <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.navbar .menu');
+            menu.classList.toggle('active');
+        }
+
+        // Inicializar el mapa
+        var map = L.map('map').setView([20.9674, -89.5926], 12); // Coordenadas centradas en Mérida, Yucatán
+
+        // Cargar las capas del mapa desde OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Agregar marcadores de ejemplo
+        var centros = [
+        {
+            "name": "Instituto Municipal de la Mujer",
+            "lat": 20.965157,
+            "lng": -89.625814,
+            "description": "El Instituto Municipal de la Mujer tiene la misión de impulsar y fortalecer el ejercicio de los derechos humanos de las mujeres a favor de la igualdad sustantiva y la cultura para la paz."
+        },
+        {
+            "name": "Centro de Atención Integral a las Mujeres en Mérida",
+            "lat": 20.975950,
+            "lng": -89.617779,
+            "description": "Ofrece atención psicológica, legal y médica a mujeres en situación de violencia, promoviendo la igualdad de género y la no violencia."
+        },
+        {
+            "name": "Casa de la Mujer 'La Joya'",
+            "lat": 20.953122,
+            "lng": -89.628920,
+            "description": "Este refugio proporciona un espacio seguro y servicios de apoyo para mujeres y sus hijos que han sido víctimas de violencia doméstica."
+        },
+        {
+            "name": "Centro de Justicia para las Mujeres en Yucatán",
+            "lat": 20.977865,
+            "lng": -89.622750,
+            "description": "Brinda atención integral y especializada para mujeres víctimas de violencia, incluyendo asesoría legal, apoyo psicológico, y orientación social."
+        },
+        {
+            "name": "Unidad de Atención Sicológica, Sexológica y Educativa para el Crecimiento Personal (UNASSE)",
+            "lat": 20.979177,
+            "lng": -89.632584,
+            "description": "Enfocada en ofrecer servicios psicológicos y educativos a mujeres, hombres y niños, promoviendo la prevención y erradicación de la violencia de género."
+        },
+        {
+            "name": "Centro Regional Violeta",
+            "lat": 20.970951,
+            "lng": -89.621695,
+            "description": "Este centro, ubicado en el Centro Histórico de Mérida, ofrece atención integral a mujeres y niñas víctimas de violencia, con capacidad para atender hasta 170 personas diariamente. Proporciona asesoría legal, apoyo psicológico y servicios especializados en un entorno seguro y cómodo."
+        },
+        {
+            "name": "Ciavi 'Casa de la Mujer'",
+            "lat": 20.968350,
+            "lng": -89.622640,
+            "description": "Enfocado en el desarrollo integral y la atención a la violencia intrafamiliar, este centro ofrece servicios de asesoría y apoyo a víctimas de violencia de género en un entorno confidencial en el barrio San Cristobal de Mérida."
+        },
+        {
+            "name": "Procuraduría de la Defensa del Menor y la Familia",
+            "lat": 20.944726,
+            "lng": -89.593537,
+            "description": "Ubicado en la colonia Miraflores, este centro proporciona apoyo legal y psicológico a menores y familias en situaciones de violencia, siendo un punto de referencia crucial en casos de abuso o violencia familiar."
+        },
+        {
+            "name": "Comisión Nacional para el Desarrollo de los Pueblos Indígenas (CDI)",
+            "lat": 20.976196,
+            "lng": -89.611108,
+            "description": "Este centro, situado en la colonia Itzimná, ofrece servicios de asesoría legal, conciliación y defensoría en materia penal, civil y laboral, con un enfoque particular en las comunidades indígenas afectadas por la violencia de género."
+        }
+    ];
+    
+
+        centros.forEach(function(centro) {
+            L.marker([centro.lat, centro.lng]).addTo(map)
+                .bindPopup(`<b>${centro.name}</b><br>${centro.description}`);
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

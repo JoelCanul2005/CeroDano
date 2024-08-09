@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidad Libre de Violencia de Género</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Gris claro de fondo */
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #7b46ed;
+            padding: 15px 20px;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo img {
+            height: 50px;
+        }
+
+        .navbar .menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .navbar .button {
+            color: #ffffff;
+            background-color: #8000E5;
+            border: 1px solid #8000E5;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .menu {
+                display: none;
+            }
+
+            .navbar .toggle-button {
+                display: block;
+                cursor: pointer;
+                color: #ffffff;
+                font-size: 24px;
+            }
+
+            .navbar .menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #753AF2;
+                z-index: 1;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .navbar .menu.active a {
+                padding: 15px;
+                text-align: center;
+                border-bottom: 1px solid #FFC107;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .navbar .toggle-button {
+                display: none;
+            }
+        }
+
+        .image-container {
+            width: 100%;
+            height: 150px;
+            background-color: #E53935; /* Rojo vibrante */
+            overflow: hidden;
+            margin-top: -10px; /* Pegado al navbar */
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .content h2 {
+            font-size: 1.8rem;
+            color: #000000; /* Azul fuerte */
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .content p {
+            color: #333;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .info-card {
+            background-color: #FFCDD2; /* Rojo claro */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card h5 {
+            font-size: 1.2rem;
+            color: #B71C1C; /* Rojo oscuro */
+            font-weight: bold;
+        }
+
+        .info-card p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .helpline {
+            background-color: #FF8A80; /* Rojo vibrante */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .helpline h3 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .helpline p {
+            color: #ffffff;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .tips-section {
+            background-color: #FFEBEE; /* Fondo rosado claro */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+
+        .tips-section h3 {
+            color: #B71C1C; /* Rojo oscuro */
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .tips-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .tips-section ul li {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><img src="/images/logo.png" alt="Logo"></div>
+        
+        <div class="toggle-button" onclick="toggleMenu()">
+            &#9776;
+        </div>
+        
+        <div class="menu">
+            <a href="/" class="button">Inicio</a>
+            <a href="/blog" class="button">Blog</a>
+            <a href="/reportes" class="button">Reportes</a>
+            <a href="/centro-ayuda" class="button">Centros de Ayuda</a>
+            <a href="/ayuda" class="button">Ayuda</a>
+        </div>
+    </nav>
+
+    <div class="image-container">
+        <img src="/images/imgprinmuj.png" alt="Imagen Principal">
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="section-title">Formas de Violencia hacia Mujeres</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="info-card">
+                    <h5>Violencia Física</h5>
+                    <p>Golpes, empujones, mordiscos o cualquier otro tipo de agresión física.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <h5>Violencia Psicológica</h5>
+                    <p>Insultos, humillaciones, manipulación emocional, control y aislamiento social.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <h5>Violencia Sexual</h5>
+                    <p>Forzar a realizar actos sexuales no deseados, acoso sexual o cualquier forma de abuso sexual.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <h5>Violencia Económica</h5>
+                    <p>Control del dinero, impedir que trabaje o que administre sus propios recursos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section mt-5">
+            <h3>¿Cómo reconocer la violencia hacia las mujeres?</h3>
+            <ul>
+                <li>Señales de miedo constante o ansiedad en presencia de su pareja.</li>
+                <li>Control excesivo por parte de la pareja sobre las actividades diarias.</li>
+                <li>Aislamiento de familiares y amigos, o prohibición de verlos.</li>
+                <li>Desgaste emocional constante o baja autoestima derivada de la relación.</li>
+                <li>Dependencia económica total de la pareja.</li>
+            </ul>
+        </div>
+
+        <div class="helpline mt-5">
+            <h3>Línea de Ayuda para Mujeres</h3>
+            <p>800 911 2000</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.navbar .menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
