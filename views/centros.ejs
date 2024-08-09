@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body {
-            background-color: #f8f9fa; /* Gris claro de fondo */
+            background-color: #d9d3ec;
             font-family: 'Arial', sans-serif;
         }
 
@@ -20,6 +20,7 @@
             padding: 15px 20px;
             color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Asegura que la barra de navegación esté por encima de otros elementos */
         }
 
         .navbar .logo img {
@@ -71,7 +72,7 @@
                 left: 0;
                 width: 100%;
                 background-color: #753AF2;
-                z-index: 1;
+                z-index: 1001;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             }
 
@@ -93,6 +94,16 @@
             width: 100%;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 500; /* Mapa con z-index menor para que quede detrás del menú */
+        }
+
+        /* Margen superior cuando el menú está activo */
+        .content {
+            transition: margin-top 0.3s ease;
+        }
+
+        .menu.active ~ .content {
+            margin-top: 200px; /* Ajusta según la altura del menú */
         }
     </style>
 </head>
@@ -114,7 +125,7 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-5 content">
         <h1 class="mb-4">Centros de Ayuda de Violencia</h1>
         <div id="map"></div>
     </div>
@@ -124,6 +135,8 @@
         function toggleMenu() {
             const menu = document.querySelector('.navbar .menu');
             menu.classList.toggle('active');
+            const content = document.querySelector('.content');
+            content.style.marginTop = menu.classList.contains('active') ? menu.scrollHeight + 'px' : '0';
         }
 
         // Inicializar el mapa
