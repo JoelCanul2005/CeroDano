@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Reporte - Universidad Libre de Violencia de Género</title>
+    <title>Crear Reporte</title>
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -90,6 +91,21 @@
         .container {
             margin-top: 20px;
         }
+
+        .example-text {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 5px solid #7b46ed;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .example-text p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
     </style>
 </head>
 <body>
@@ -98,6 +114,11 @@
         <div class="logo">
             <img src="/images/logo.png" alt="Logo" width="65px" height="65px">
         </div>
+        
+        <div class="toggle-button" onclick="toggleMenu()">
+            &#9776;
+        </div>
+        
         <div class="menu">
             <a href="/" class="button">Inicio</a>
             <a href="/blog" class="button">Blog</a>
@@ -109,6 +130,16 @@
 
     <div class="container">
         <h1 class="mb-4">Crear Reporte</h1>
+
+        <!-- Texto de ejemplo -->
+        <div class="example-text">
+            <p><strong>Ejemplo de cómo estructurar un reporte:</strong></p>
+            <p>1. Introducción: Describa brevemente la situación o problema.</p>
+            <p>2. Detalles: Proporcione detalles específicos, como fechas, lugares, personas involucradas.</p>
+            <p>3. Impacto: Explique el impacto o consecuencias de la situación.</p>
+            <p>4. Conclusión: Ofrezca sugerencias o soluciones, si las tiene.</p>
+        </div>
+
         <form action="/crear-reporte" method="POST">
             <div class="mb-3">
                 <label for="contenido_reporte" class="form-label">Describe el reporte</label>
@@ -117,6 +148,13 @@
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.navbar .menu');
+            menu.classList.toggle('active');
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

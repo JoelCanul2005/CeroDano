@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Publicación - Universidad Libre de Violencia de Género</title>
+    <title>Crear Publicación</title>
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa; /* Gris claro de fondo */
+            background-color: #d9d3ec; /* Gris claro de fondo */
             font-family: 'Arial', sans-serif;
         }
 
@@ -90,6 +91,21 @@
         .container {
             margin-top: 20px;
         }
+
+        .example-text {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 5px solid #7b46ed;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .example-text p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
     </style>
 </head>
 <body>
@@ -112,6 +128,16 @@
 
     <div class="container">
         <h1 class="mb-4">Crear Publicación</h1>
+        
+        <!-- Texto de guía -->
+        <div class="example-text">
+            <p><strong>Instrucciones para compartir tu historia:</strong></p>
+            <p>1. <strong>Descripción de la situación:</strong> Comienza describiendo el problema o la situación que enfrentaste. Incluye detalles como el contexto, cómo te afectó, y cómo te sentiste en ese momento.</p>
+            <p>2. <strong>Desarrollo:</strong> Relata cómo viviste esa experiencia. ¿Qué acciones tomaste? ¿Recibiste apoyo de alguien? Explica los desafíos que enfrentaste y cómo los superaste.</p>
+            <p>3. <strong>Superación:</strong> Comparte cómo lograste superar la situación. ¿Qué aprendiste de la experiencia? ¿Qué consejo le darías a alguien en una situación similar?</p>
+            <p>4. <strong>Conclusión:</strong> Termina con una reflexión sobre cómo esta experiencia te ha impactado y cómo has crecido a partir de ella.</p>
+        </div>
+
         <form action="/crear-publicacion" method="POST">
             <div class="mb-3">
                 <label for="contenido" class="form-label">Cuéntanos tu historia</label>

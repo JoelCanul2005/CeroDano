@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Universidad Libre de Violencia de Género</title>
+    <title>Blog</title>
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -134,6 +135,34 @@
             color: #888;
             margin-top: 20px;
         }
+
+        /* Filtros */
+        .filters {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .filters label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .filters select {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Centrar título y botón */
+        h1, .create-button {
+            text-align: center;
+        }
+
+        .create-button {
+            display: flex;
+            justify-content: center;
+        }
+
     </style>
 </head>
 <body>
@@ -156,14 +185,34 @@
 
     <div class="container mt-5">
         <h1 class="mb-4">Blog</h1>
-        <a href="/crear-publicacion" class="btn btn-primary mb-4">Crear Publicación</a>
-        <div class="row">
+        
+        <!-- Botón Crear Publicación centrado -->
+        <div class="create-button mb-4">
+            <a href="/crear-publicacion" class="btn btn-primary">Crear Publicación</a>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <label for="genderFilter">Género:</label>
+            <select id="genderFilter" onchange="filterPosts()">
+                <option value="all">Todos</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+
+        <div class="row" id="postContainer">
             <% if (publicaciones && publicaciones.length > 0) { %>
+                <% publicaciones.sort((a, b) => new Date(b.fecha_publicacion) - new Date(a.fecha_publicacion)); %>
                 <% publicaciones.forEach(publicacion => { %>
-                    <div class="col-md-12 mb-4">
+                    <div class="col-md-12 mb-4 post-card" data-gender="<%= publicacion.genero %>">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Publicado el <%= new Date(publicacion.fecha_publicacion).toLocaleDateString('es-ES') %></h5>
+                                <h5 class="card-title">
+                                    Publicado el <%= new Date(publicacion.fecha_publicacion).toLocaleDateString('es-ES') %> 
+                                    | Género: <%= publicacion.genero.charAt(0).toUpperCase() + publicacion.genero.slice(1) %>
+                                </h5>
                                 <p class="card-text"><%= publicacion.contenido %></p>
                             </div>
                             <div class="card-footer">
@@ -184,6 +233,20 @@
         function toggleMenu() {
             const menu = document.querySelector('.navbar .menu');
             menu.classList.toggle('active');
+        }
+
+        function filterPosts() {
+            const genderFilter = document.getElementById('genderFilter').value;
+            const posts = document.querySelectorAll('.post-card');
+
+            posts.forEach(post => {
+                const postGender = post.getAttribute('data-gender');
+                if (genderFilter === 'all' || postGender === genderFilter) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
         }
     </script>
 
